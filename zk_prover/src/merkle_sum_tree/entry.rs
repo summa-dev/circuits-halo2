@@ -27,7 +27,7 @@ impl<const N_CURRENCIES: usize> Entry<N_CURRENCIES> {
     }
 
     /// Returns a zero entry where the username is 0 and the balances are all 0
-    pub fn zero_entry() -> Self {
+    pub fn init_empty() -> Self {
         let empty_balances: [BigUint; N_CURRENCIES] = std::array::from_fn(|_| BigUint::from(0u32));
 
         Entry {

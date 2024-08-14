@@ -7,7 +7,7 @@ edition = "2021"
 
 [features]
 dev-graph = ["halo2_proofs/dev-graph", "plotters"]
-
+skip-node-balance-check = []
 
 [dependencies]
 halo2_proofs = { git = "https://github.com/summa-dev/halo2"}

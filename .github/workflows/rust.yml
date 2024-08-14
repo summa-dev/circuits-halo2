@@ -82,6 +82,7 @@ jobs:
         run: |
           cd zk_prover
           cargo test --release --features dev-graph -- --nocapture
+          cargo test --package summa-solvency --lib --features "skip-node-balance-check" -- circuits::tests::test::test_balance_not_in_range
 
   test-zk-prover-examples:
     runs-on: ubuntu-latest

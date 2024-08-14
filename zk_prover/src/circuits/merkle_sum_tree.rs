@@ -74,7 +74,7 @@ where
 {
     pub fn init_empty() -> Self {
         Self {
-            entry: Entry::zero_entry(),
+            entry: Entry::init_empty(),
             path_indices: vec![Fp::zero(); LEVELS],
             sibling_leaf_node_hash_preimage: [Fp::zero(); N_CURRENCIES + 1],
             sibling_middle_node_hash_preimages: vec![[Fp::zero(); N_CURRENCIES + 2]; LEVELS],

@@ -6,8 +6,13 @@ use num_traits::Num;
 use prelude::*;
 
 use halo2_solidity_verifier::{compile_solidity, BatchOpenScheme::Bdfg21, SolidityGenerator};
-use summa_solvency::circuits::utils::generate_setup_artifacts;
-use summa_solvency::circuits::{merkle_sum_tree::MstInclusionCircuit, WithInstances};
+use summa_solvency::{
+    circuits::{
+        utils::generate_setup_artifacts,
+        {merkle_sum_tree::MstInclusionCircuit, WithInstances},
+    },
+    merkle_sum_tree::utils::calculate_max_root_balance,
+};
 
 const LEVELS: usize = 4;
 const N_CURRENCIES: usize = 2;
@@ -50,13 +55,6 @@ fn save_solidity(name: impl AsRef<str>, solidity: &str) {
         .write_all(solidity.as_bytes())
         .unwrap();
     println!("Saved {path}");
-}
-
-// Calculate the maximum value that the Merkle Root can have, given N_BYTES and LEVELS
-fn calculate_max_root_balance(n_bytes: usize, n_levels: usize) -> BigInt {
-    // The max value that can be stored in a leaf node or a sibling node, according to the constraint set in the circuit
-    let max_leaf_value = BigInt::from(2).pow(n_bytes as u32 * 8) - 1;
-    max_leaf_value * (n_levels + 1)
 }
 
 // Given a combination of `N_BYTES` and `LEVELS`, check if there is a risk of overflow in the Merkle Root

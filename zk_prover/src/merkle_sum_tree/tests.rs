@@ -1,7 +1,9 @@
 #[cfg(test)]
 mod test {
-
-    use crate::merkle_sum_tree::utils::big_uint_to_fp;
+    use crate::merkle_sum_tree::utils::{
+        big_uint_to_fp, build_leaves_from_entries, build_merkle_tree_from_leaves,
+        parse_csv_to_entries,
+    };
     use crate::merkle_sum_tree::{Entry, MerkleSumTree, Node, Tree};
     use num_bigint::{BigUint, ToBigUint};
     use rand::Rng as _;
@@ -63,6 +65,20 @@ mod test {
         let mut proof_invalid_2 = proof.clone();
         proof_invalid_2.root.hash = 0.into();
         assert!(!merkle_tree.verify_proof(&proof_invalid_2));
+    }
+
+    #[test]
+    #[should_panic(expected = "Node balance is exceed limit")]
+    fn test_node_and_root_balance_limit() {
+        let (_, entries) = parse_csv_to_entries::<&str, N_CURRENCIES, N_BYTES>(
+            "../csv/entry_16_max_node_balance.csv",
+        )
+        .unwrap();
+
+        let leaves = build_leaves_from_entries::<N_CURRENCIES>(&entries);
+        let depth = (entries.len() as f64).log2().ceil() as usize;
+
+        let _ = build_merkle_tree_from_leaves::<N_CURRENCIES, N_BYTES>(&leaves, depth);
     }
 
     #[test]
@@ -210,7 +226,7 @@ mod test {
         // The last 3 entries of the merkle tree should be zero entries
         for i in 13..16 {
             let entry = merkle_tree.entries()[i].clone();
-            assert_eq!(entry, Entry::<N_CURRENCIES>::zero_entry());
+            assert_eq!(entry, Entry::<N_CURRENCIES>::init_empty());
         }
 
         // expect root hash to be different than 0
@@ -242,7 +258,7 @@ mod test {
         // The last 15 entries of the merkle tree should be zero entries
         for i in 17..32 {
             let entry = merkle_tree.entries()[i].clone();
-            assert_eq!(entry, Entry::<N_CURRENCIES>::zero_entry());
+            assert_eq!(entry, Entry::<N_CURRENCIES>::init_empty());
         }
 
         // expect root hash to be different than 0

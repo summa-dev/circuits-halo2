@@ -267,6 +267,7 @@ mod test {
 
     // Building a proof using as input a csv file with an entry that is not in range [0, 2^N_BYTES*8 - 1] should fail the range check constraint on the leaf balance
     #[test]
+    #[cfg(feature = "skip-node-balance-check")]
     fn test_balance_not_in_range() {
         let merkle_sum_tree =
             MerkleSumTree::<N_CURRENCIES, N_BYTES>::from_csv("../csv/entry_16_overflow.csv")
