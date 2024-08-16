@@ -72,7 +72,15 @@ where
     [(); N_CURRENCIES + 1]:,
 {
     fn configure(meta: &mut ConstraintSystem<Fp>) -> Self {
-        let username = meta.advice_column();
+        // By default, the username is in a blinded column like any other private inputs in common Halo2 circuit.
+        // However, this makes it indistinguishable between fake user data and real user data that has zero values in Summa circuit.
+        // Therefore, we have introduced a feature that allows the username to be unblinded instead of blinded, which may be necessary for the prover in the future.
+        // Refer to this comment for more details: https://github.com/zBlock-2/summa-solvency/issues/9#issuecomment-2143427298
+        let username: Column<Advice> = if cfg!(feature = "unblind-username") {
+            meta.unblinded_advice_column()
+        } else {
+            meta.advice_column()
+        };
 
         let balances = [(); N_CURRENCIES].map(|_| meta.unblinded_advice_column());
 

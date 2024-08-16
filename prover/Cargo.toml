@@ -9,6 +9,7 @@ edition = "2021"
 dev-graph = ["halo2_proofs/dev-graph", "plotters"]
 profiling = []
 no_range_check = []
+unblind-username = []
 
 
 [dependencies]
