@@ -57,3 +57,13 @@ To run the benchmarks use the following command:
 ```bash
 cargo bench
 ```
+
+## Potential Improvement point
+
+### Using Gemini to avoid trusted setup in Summa
+
+As we explored alternative solutions to make the SRS compatible between Plonk and HyperPlonk, we came across another backend proving system supported in the Plonkish-backend. This system, known as Gemini, eliminates the need for a trusted setup in multilinear KZG. Consequently, there is no need to concern ourselves with the SRS file and other elements as described in the section [`Power of Tau Trusted Setup for HyerPlonk`](#power-of-tau-trusted-setup-for-hyerplonk).
+
+We believe that switching to another backend in [Plonkish](https://github.com/summa-dev/plonkish) would not be difficult. However, due to our project goals and time constraints, we have decided to defer this improvement point to future contributors.
+
+You can find the Gemini Paper [here](https://eprint.iacr.org/2022/420.pdf) and the Gemini implementation in Plonkish [here](https://github.com/summa-dev/plonkish/blob/main/plonkish_backend/src/pcs/multilinear/gemini.rs).
