@@ -136,6 +136,13 @@ contract Summa is Ownable {
      * @param vkContract The address of the verifying key contract
      * @param numberOfCurrencies The number of cryptocurrencies whose polynomials are committed in the proof
      * @return isValid True if the number of permutations in the verifying key corresponds to the number of cryptocurrencies
+     *
+     * WARNING: The permutation length may not be correctly calculated by the method 'calculatePermutationLength' if the prover
+     * deliberately tries to deceive the process. This issue cannot be resolved even if we change the approach to rely on user input
+     * for the length instead of calculating it within the method. The ultimate solution is to implement a validation process for the
+     * verifying key contract that can be performed by the user themselves. This issue will be addressed in the following: 
+     * https://github.com/summa-dev/summa-solvency/issues/299
+     */
      */
     function validateVKPermutationsLength(
         address vkContract,
