@@ -144,4 +144,5 @@ The result will display as:
 4. Verifying the proof on contract verifier for User #0: true
 ```
 
-**Note:** In a production environment, users can independently verify their proof using public interfaces, such as Etherscan.
+**Note:** In a production environment, users can independently verify their proof using public interfaces, such as Etherscan. 
+Also, It's crucial for the prover to inform users about the potential risk of private data leakage, specifically their balances, during the proof verification process. This is especially important when using a third-party endpoint to query `verify_inclusion_proof` method.
