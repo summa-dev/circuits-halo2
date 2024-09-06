@@ -5,10 +5,12 @@ pragma solidity ^0.8.18;
 //import "hardhat/console.sol";
 
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "./Vkverifier.sol";
 
 import "./interfaces/IVerifier.sol";
 
-contract Summa is Ownable {
+
+contract Summa is Ownable , vkVerifier {
     /**
      * @dev Struct representing the configuration of the Summa instance
      * @param mstLevels The number of levels of the Merkle sum tree
